@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta id="viewport" content="width=700px, initial-scale=1, maximum-scale=1">
+	<title>Create New Connection</title>
+	<link rel="stylesheet" href="layui/css/layui.css">
+	<script src="layui/layui.js"></script>
+	<style>
+		.layui-form-item input {
+			width: 350px;
+		}
+
+		button {
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+
+		#newcntn,
+		body {
+			width: 700px;
+		}
+
+		#newcntn .layui-form-label {
+			width: 120px;
+		}
+
+		#usertype {
+			margin-left: 40px;
+		}
+
+		#ui-upload {
+			height: 30px;
+			width: 80px;
+			background-color: #00abff;
+			font-size: 14px;
+			line-height: 30px;
+			cursor: pointer;
+			display: inline-block;
+			text-align: center;
+			color: #fff;
+			border-radius: 3px;
+			margin-left: 5px;
+		}
+
+		.has-file .layui-input {
+			display: inline-block;
+		}
+	</style>
+</head>
+
+<body id="newcntn">
+<div class="layui-tab layui-tab-card">
+	<ul class="layui-tab-title">
+		<li class="layui-this">Connection</li>
+		<li>SSH Tunnel</li>
+	</ul>
+	<div class="layui-tab-content" style="height: 420px;">
+		<div class="layui-tab-item layui-show">
+			<form class="layui-form" lay-filter="connection-params">
+				<div class="layui-form-item">
+					<label class="layui-form-label">Name</label>
+					<div class="layui-input-inline">
+						<input type="text" id="name" name="name" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Host</label>
+					<div class="layui-input-inline">
+						<input type="text" id="host" name="host" autocomplete="off" class="layui-input"
+							   value="localhost">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Port</label>
+					<div class="layui-input-inline">
+						<input type="number" id="port" name="port" autocomplete="off" class="layui-input"
+							   value="8086">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">User Name</label>
+					<div class="layui-input-inline">
+						<input type="number" id="username" name="username"
+							   placeholder="influxdb User Name can be empty" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Password</label>
+					<div class="layui-input-inline">
+						<input type="password" id="password" name="password"
+							   placeholder="influxdb Password can be empty" autocomplete="off" class="layui-input">
+						<input type="checkbox" lay-filter="showpassword" title="Show Password" lay-skin="primary">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="layui-tab-item">
+			<form class="layui-form ssh-tunnel-form" lay-filter="ssh-params">
+				<div class="layui-form-item" pane="">
+					<div class="layui-input-block" style="margin-left: 52px;">
+						<input type="checkbox" id="usessh" name="usessh" lay-skin="primary" title="Use SSH Tunnel"
+							   lay-filter="usessh">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Remote Host</label>
+					<div class="layui-input-inline">
+						<input type="text" id="remotehost" name="remotehost" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Remote Port</label>
+					<div class="layui-input-inline">
+						<input type="number" id="remoteport" name="remoteport" autocomplete="off"
+							   class="layui-input" value="22">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">User Name</label>
+					<div class="layui-input-inline">
+						<input type="text" id="sshusername" name="sshusername" autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+				<div id="usertype">
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<input type="radio" name="logintype" lay-filter="logintype" value="privatekey"
+								   title="Private Key" disabled>
+							<input type="radio" name="logintype" lay-filter="logintype" value="password"
+								   title="Password" disabled>
+						</div>
+					</div>
+					<div class="layui-form-item through_file">
+						<label class="layui-form-label">Path</label>
+						<div class="layui-input-inline has-file" style="width: auto">
+							<input type="text" id="sshprivatekey" autocomplete="off" class="layui-input"
+								   disabled="disabled" name="sshprivatekey">
+							<label id="ui-upload">Choose File<input type="file" style="display: none;"
+																	id="pathselect" disabled="disabled"/></label>
+						</div>
+					</div>
+					<div class="layui-form-item through_password">
+						<label class="layui-form-label">Password</label>
+						<div class="layui-input-inline">
+							<input type="password" id="sshpassword" name="sshpassword" autocomplete="off"
+								   class="layui-input" disabled="disabled">
+							<input type="checkbox" lay-filter="showpassword" title="Show Password"
+								   lay-skin="primary" disabled>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="buttons">
+	<div style="width: 640px;margin: 0px;">
+		<div style="display: inline-block; margin-left: 100px;">
+			<button type="button" id="test" class="layui-btn layui-btn-primary layui-btn-radius">Test
+				Connection
+			</button>
+		</div>
+		<div style="display: inline-block">
+			<button type="button" id="ok" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit
+					lay-filter="ok">OK
+			</button>
+		</div>
+		<div style="display: inline-block">
+			<button type="button" id="cancel" class="layui-btn layui-btn-primary layui-btn-radius">Cancel</button>
+		</div>
+	</div>
+</div>
+<div style="display: none">
+	<input id="transport" type="text">
+</div>
+<script>
+    let callback = null
+        , layer_index = null
+        , rowId = null
+        , groupName = "";
+    layui.use(['element', 'form'], function () {
+        var $ = layui.jquery
+            , form = layui.form
+            , layer = layui.layer;
+
+        $("#pathselect").on("change", function () {
+            let pn = $("#pathselect").val();
+            console.log(pn);
+            $("#sshprivatekey").val(pn);
+        });
+        form.on('radio(logintype)', function (data) {
+            loginTypeChange($, form, data.value === "password");
+        });
+        // form.verify({});
+        $().ready(function () {
+            let ssh_checked = $("#usessh")[0].checked;
+            topChange($, form, ssh_checked);
+            form.on('checkbox(usessh)', function (data) {
+                topChange($, form, data.elem.checked);
+            });
+            form.on('checkbox(showpassword)', function (data) {
+                sshpasswordChange($, form, this.title, data.elem.checked);
+            });
+            $("#host").on("blur", function () {
+                let hostname = $("#host").val();
+                let name = $("#name").val();
+                if (!name && hostname) {
+                    $("#name").val(hostname);
+                }
+            });
+            $("#test").on("click", function () {
+                if (callback) {
+                    let data = getData($, layer, form);
+                    if (!data) {
+                        return
+                    }
+                    callback(layer_index, "test", data);
+                } else {
+                    layer.msg("no callback on ok click");
+                }
+            });
+            $("#ok").on("click", function () {
+                if (callback) {
+                    let data = getData($, layer, form);
+                    if (!data) {
+                        return
+                    }
+                    callback(layer_index, "ok", data);
+                } else {
+                    layer.msg("no callback on ok click");
+                }
+            });
+            $("#cancel").on("click", function () {
+                if (callback) {
+                    callback(layer_index, "cancel");
+                } else {
+                    layer.msg("no callback on cancel click");
+                }
+            });
+            let initData = $("#transport").val();
+            if (initData) {
+                setData(initData);
+            }
+        });
+
+        function setData(val) {
+            let formData = JSON.parse(val);
+            rowId = formData["rowid"];
+            groupName = formData["groupname"];
+            if (formData["hide"]){
+                $("#buttons").hide();
+			}
+            let params = {
+                "name": formData["name"],
+                "host": formData["host"],
+                "port": formData["port"],
+                "username": formData["username"],
+                "password": formData["password"]
+            };
+            form.val('connection-params', params);
+            let openssh = formData["usessh"];
+            if (!openssh) {
+                return;
+            }
+            let sshParams = {
+                "usessh": openssh,
+                "remotehost": formData["remotehost"],
+                "remoteport": formData["remoteport"],
+                "sshusername": formData["sshusername"],
+                "logintype": formData["logintype"],
+                "sshpassword": formData["sshpassword"],
+                "sshprivatekey": formData["sshprivatekey"]
+            };
+            form.val('ssh-params', sshParams);
+        }
+    });
+
+    function getData($, layer, form) {
+        let connectionParams = form.val('connection-params');
+        if (!connectionParams["host"]) {
+            return sayRequire($, "host", layer);
+        }
+        if (!connectionParams["port"]) {
+            return sayRequire($, "port", layer);
+        } else {
+            let port = connectionParams["port"];
+            if (/^\d+$/.test(port)) {
+                connectionParams["port"] = parseInt(port);
+            } else {
+                return sayRequire($, "port", layer, "port must be a number");
+            }
+        }
+        let sshParams = form.val('ssh-params');
+        let usessh = sshParams["usessh"];
+        if (usessh) {
+            if (!sshParams["remotehost"]) {
+                return sayRequire($, "remotehost", layer);
+            }
+            if (!sshParams["remoteport"]) {
+                return sayRequire($, "remoteport", layer);
+            } else {
+                let port = sshParams["remoteport"];
+                if (/^\d+$/.test(port)) {
+                    sshParams["remoteport"] = parseInt(port);
+                } else {
+                    return sayRequire($, "remoteport", layer, "remote port must be a number");
+                }
+            }
+            if (!sshParams["sshusername"]) {
+                return sayRequire($, "sshusername", layer, "SSH User Name is required");
+            }
+            let logintype = sshParams["logintype"];
+            if (!logintype) {
+                return sayRequire($, "", layer, "select [Private Key] or [Password]");
+            } else {
+                if (logintype === "password") {
+                    if (!sshParams["sshpassword"]) {
+                        return sayRequire($, "sshpassword", layer, "SSH password is required");
+                    }
+                } else {
+                    if (!sshParams["sshprivatekey"]) {
+                        return sayRequire($, "sshprivatekey", layer, "SSH private file is required");
+                    }
+                }
+            }
+            connectionParams = Object.assign(sshParams, connectionParams);
+        }
+        if (rowId){
+            connectionParams["rowid"] = rowId;
+		}
+        if (groupName){
+            connectionParams["group"] = groupName;
+		}
+        return connectionParams;
+    }
+
+    function sayRequire($, idtag, layer, msg) {
+        $(`#${idtag}`).focus();
+        if (!layer) {
+            return
+        }
+        if (!msg) {
+            msg = `${idtag} is required!`;
+        }
+        layer.msg(msg);
+    }
+
+    function loginTypeChange($, form, ispassword) {
+        if (ispassword) {
+            $("#sshprivatekey").addClass("layui-disabled");
+            $("#pathselect").addClass("layui-disabled");
+            $("#sshprivatekey").attr("disabled", true);
+            $("#pathselect").attr("disabled", true);
+            $(".through_password input").removeAttr("disabled");
+            $(".through_password input").removeClass("layui-disabled");
+        } else {
+            $("#sshprivatekey").removeClass("layui-disabled");
+            $("#pathselect").removeClass("layui-disabled");
+            $("#sshprivatekey").removeAttr("disabled");
+            $("#pathselect").removeAttr("disabled");
+            $(".through_password input").attr("disabled", true);
+            $(".through_password input").addClass("layui-disabled");
+        }
+        form.render();
+    }
+
+    function topChange($, form, selected) {
+        if (selected) {
+            $("#remotehost").removeAttr("disabled");
+            $("#remoteport").removeAttr("disabled");
+            $("#username").removeAttr("disabled");
+            $(":radio").removeAttr("disabled");
+        } else {
+            $("#remotehost").attr("disabled", true);
+            $("#remoteport").attr("disabled", true);
+            $("#username").attr("disabled", true);
+            $(":radio").attr("disabled", true);
+        }
+        form.render('radio');
+    }
+
+    function sshpasswordChange($, form, title, show) {
+        let id = "#sshpassword";
+        if (title.trim() === "Show Auth") {
+            id = "#password";
+        }
+        if (show) {
+            $(id).attr("type", "text");
+            return;
+        }
+        $(id).attr("type", "password");
+    }
+
+    function setCallback(method, index) {
+        callback = method;
+        layer_index = index;
+    }
+
+    function initFormData(formData) {
+        document.getElementById("transport").value = JSON.stringify(formData);
+    }
+</script>
+</body>
