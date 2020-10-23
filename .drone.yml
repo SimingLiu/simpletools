@@ -1,0 +1,14 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+    - name: build
+      image: golang
+      environment:
+        APP_SECRET:
+          from_secret: testone
+      commands:
+      - echo $A_SECRET
+      - go run . > test_secret.txt
+      - cat test_secret.txt
