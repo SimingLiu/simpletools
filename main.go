@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	a := 1345
-	fmt.Println("exiting...", a != 1234)
+	fmt.Println("---everything is ok---")
+	fmt.Println("exiting...")
 }
