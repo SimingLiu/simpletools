@@ -9,6 +9,8 @@ steps:
         APP_SECRET:
           from_secret: testone
       commands:
-      - echo $A_SECRET
+      - go env -w GO111MODULE=on
+      - go env -w GOPROXY=https://goproxy.io,direct
+      - echo $APP_SECRET
       - go run . > test_secret.txt
       - cat test_secret.txt
