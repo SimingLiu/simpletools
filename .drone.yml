@@ -7,7 +7,7 @@ steps:
       image: golang
       environment:
         APP_SECRET:
-          from_secret: testone
+          from_secret: testdrone
       commands:
       - go env -w GO111MODULE=on
       - go env -w GOPROXY=https://goproxy.io,direct
