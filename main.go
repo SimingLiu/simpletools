@@ -6,5 +6,5 @@ import (
 
 func main() {
 	fmt.Println("> ---everything is ok---")
-	fmt.Println("> exiting...")
+	fmt.Println("> .exiting...")
 }
