@@ -20,20 +20,3 @@ steps:
 trigger:
     branch:
         - test_drone
-
-pipeline:
-    my-build:
-        image: golang
-        environment:
-            APP_SECRET:
-                from_secret: testdrone
-        commands:
-            - go env -w GO111MODULE=on
-            - go env -w GOPROXY=https://goproxy.io,direct
-            - echo $APP_SECRET
-            - go run . > test_secret.txt
-            - cat test_secret.txt
-            - echo "-- DONE --"
-        when:
-         branch: test_drone
-         event: push
