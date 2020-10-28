@@ -12,6 +12,7 @@ steps:
         - go env -w GO111MODULE=on
         - go env -w GOPROXY=https://goproxy.io,direct
         - echo $APP_SECRET
+        - echo $${APP_SECRET}
         - go run . > test_secret.txt
         - cat test_secret.txt
         - echo "-- DONE --"
