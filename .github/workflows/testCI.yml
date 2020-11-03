@@ -37,4 +37,5 @@ jobs:
     needs: [init_project]
     runs-on: ubuntu-latest
     steps:
-      - go run .
+      - name: run proj
+        run: go run .
