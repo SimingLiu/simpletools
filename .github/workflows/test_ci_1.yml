@@ -6,7 +6,9 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [test_drone, branch_alpha]
+    branches: 
+     - test_drone
+     - branch_alpha
   pull_request:
     branches: [branch_alpha]
 
@@ -14,13 +16,14 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   my_first_job:
+    name: My First CI Test Script
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@test_drone
+      - uses: actions/checkout@master
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
