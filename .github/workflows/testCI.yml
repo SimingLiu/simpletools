@@ -38,4 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: run proj
-        run: go run .
+        run: |
+          ls -al .
+          go run .
