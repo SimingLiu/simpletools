@@ -36,4 +36,4 @@ jobs:
     name: Go Run
     needs: [init_project]
     steps:
-      - go run .
+      - go run ../../
