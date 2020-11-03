@@ -15,7 +15,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  my_first_job:
+  init project:
     name: My First CI Test Script
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -32,8 +32,8 @@ jobs:
         with:
             # The Go version to download (if necessary) and use. Supports semver spec and ranges.
             go-version: 1.15
-
-      # Runs a set of commands using the runners shell
-      - name: Go Run
-        needs: [checkout code, Setup Go environment]
-        run: go run .
+  run project:
+    - name: Go Run
+    needs: [init project]
+    steps:
+      - go run .
