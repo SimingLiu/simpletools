@@ -1,15 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Branch_alpha_CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
     branches: 
-     - test_drone
-  pull_request:
-    branches: [branch_alpha]
+     - branch_alpha
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -37,4 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: run proj
-        run: go run .
+        run: |
+          HEAD_SHA=git rp HEAD
+          echo $HEAD_SHA
