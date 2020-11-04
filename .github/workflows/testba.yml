@@ -31,5 +31,5 @@ jobs:
             go-version: 1.15
       - name: run proj
         run: |
-          HEAD_SHA=/usr/bin/git rev-parse HEAD
+          HEAD_SHA=`/usr/bin/git rev-parse HEAD`
           echo $HEAD_SHA
