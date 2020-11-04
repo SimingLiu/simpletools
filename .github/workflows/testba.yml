@@ -36,5 +36,6 @@ jobs:
     steps:
       - name: run proj
         run: |
+          ls -al
           HEAD_SHA=`/usr/bin/git rev-parse HEAD`
           echo $HEAD_SHA
