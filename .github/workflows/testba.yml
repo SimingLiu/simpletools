@@ -72,8 +72,13 @@ jobs:
     needs: init_project
     if: ${{failure()}}
     env:
-      TEST_P: $GITHUB_SHA/do
+      TEST_P: ${{github.sha}}/do
+      TEST_P1: ${{github.sha + "/do"}}
+      TEST_P2: ${{$GITHUB_SHA}}/do
     steps:
       - name: show vars
         run: |
           echo $TEST_P
+          echo $TEST_P1
+          echo $TEST_P2
+          echo $GITHUB_SHA/do
