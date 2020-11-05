@@ -55,10 +55,10 @@ jobs:
   try_another_job:
     name: New Job Test
     runs-on: ubuntu-latest
-    # needs: [init_project]
-    needs: ${{init_project.result == 'success'}}
+    needs: init_project
     steps:
       - name: show vars
+        if: ${{jobs.init_project.result == 'success'}}
         run: |
           echo `git version`
           pwd
