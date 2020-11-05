@@ -72,7 +72,7 @@ jobs:
     needs: init_project
     if: ${{failure()}}
     env:
-      TEST_P: ${{GITHUB_SHA}}/do
+      TEST_P: $GITHUB_SHA/do
     steps:
       - name: show vars
         run: |
