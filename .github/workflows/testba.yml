@@ -73,10 +73,8 @@ jobs:
     if: ${{failure()}}
     env:
       TEST_P: ${{github.sha}}/do
-      TEST_P1: ${{$GITHUB_SHA}}/do
     steps:
       - name: show vars
         run: |
           echo $TEST_P
-          echo $TEST_P1
           echo $GITHUB_SHA/do
