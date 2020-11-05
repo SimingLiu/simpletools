@@ -71,7 +71,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: init_project
     if: ${{failure()}}
+    env:
+      TEST_P: ${{GITHUB_SHA}}/do
     steps:
       - name: show vars
         run: |
-          echo `git version`
+          echo $TEST_P
