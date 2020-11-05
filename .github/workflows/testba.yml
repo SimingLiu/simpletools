@@ -65,3 +65,4 @@ jobs:
           pwd
           ls -al
           echo GITHUB_SHA = $GITHUB_SHA
+          echo $HE
