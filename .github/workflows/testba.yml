@@ -58,6 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: init_project
     if: ${{success()}}
+    env:
+      STATUS: false
     steps:
       - name: show vars
         run: |
@@ -73,8 +75,9 @@ jobs:
     if: ${{failure()}}
     env:
       TEST_P: ${{github.sha}}/do
+      A_JOB_STATUS: ${{jobs.try_another_job.env.STATUS}}
     steps:
       - name: show vars
         run: |
           echo $TEST_P
-          echo $GITHUB_SHA/do
+          echo $A_JOB_STATUS
