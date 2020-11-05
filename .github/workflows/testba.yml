@@ -55,9 +55,14 @@ jobs:
   try_another_job:
     name: New Job Test
     runs-on: ubuntu-latest
-    needs: [init_project]
+    # needs: [init_project]
+    needs:
+      init_project:
+        result: success
     steps:
       - name: show vars
         run: |
           echo `git version`
+          pwd
+          ls -al
           echo GITHUB_SHA = $GITHUB_SHA
