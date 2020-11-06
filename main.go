@@ -10,5 +10,5 @@ func main() {
 	_ = c
 	fmt.Println(">- .test github action. -<")
 	fmt.Println("> --- everything is ok ---")
-	fmt.Println("> ...    -exiting-     .. ")
+	fmt.Println(">...     -exiting-      ..")
 }
