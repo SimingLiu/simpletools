@@ -13,7 +13,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   init_project:
-    name: My First CI Test Script
+    name: My Third CI Test Script
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
@@ -21,14 +21,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: mark start
-      run: |
-        curl \
-        -X POST \
-        -H "Accept: application/vnd.github.v3+json" \
-        -H "Authorization: Bearer ${{secret.FIRST_CI_SCRT}}" \
-        $PULL_ACTION \
-        -d '{"name":"pr unit test","head_sha":"$GITHUB_SHA"}'
+      - name: to  mark start
+        run: |
+          set -x
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          $PULL_ACTION \
+          -d '{"name":"pr unit test","head_sha":"${{github.sha}}"}'
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: checkout code
@@ -52,14 +52,14 @@ jobs:
     env:
       PULL_ACTION: https://api.github.com/repos/${{github.repository}}/check-runs
     steps:
-      - name: mark success
-      run: |
-      curl \
-      -X POST \
-      -H "Accept: application/vnd.github.v3+json" \
-      -H "Authorization: Bearer ${{secret.FIRST_CI_SCRT}}" \
-      $PULL_ACTION \
-      -d '{"name":"pr unit test","head_sha":"$GITHUB_SHA", "status":"completed", "conclusion":"success"}'
+      - name: to mark success
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
+          $PULL_ACTION \
+          -d '{"name":"pr unit test","head_sha":"${{github.sha}}", "status":"completed", "conclusion":"success"}'
   try_first_false:
     name: New Job Test
     runs-on: ubuntu-latest
@@ -70,9 +70,9 @@ jobs:
     steps:
       - name: mark failure
         run: |
-        curl \
-        -X POST \
-        -H "Accept: application/vnd.github.v3+json" \
-        -H "Authorization: Bearer ${{secret.FIRST_CI_SCRT}}" \
-        $PULL_ACTION \
-        -d '{"name":"pr unit test","head_sha":"$GITHUB_SHA", "status":"completed", "conclusion":"failure"}'
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "authorization: Bearer ${{ secrets.FIRST_CI_SCRT }}" \
+          $PULL_ACTION \
+          -d '{"name":"pr unit test","head_sha":"${{github.sha}}", "status":"completed", "conclusion":"failure"}'
