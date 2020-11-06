@@ -1,11 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Branch_alpha_CI
+name: Branch_alpha_pull_request
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
+  pull_request:
     branches: 
      - branch_alpha
 
@@ -16,9 +16,20 @@ jobs:
     name: My First CI Test Script
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      PULL_ACTION: https://api.github.com/repos/${{github.repository}}/check-runs
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: mark start
+      run: |
+        curl \
+        -X POST \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: Bearer ${{secret.FIRST_CI_SCRT}}" \
+        $PULL_ACTION \
+        -d '{"name":"pr unit test","head_sha":"$GITHUB_SHA"}'
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: checkout code
         uses: actions/checkout@v2
@@ -31,27 +42,7 @@ jobs:
             go-version: 1.15
 
       - name: run proj
-        run: |
-          HEAD_SHA=`/usr/bin/git rev-parse HEAD`
-          echo $HEAD_SHA
-          echo $GITHUB_SHA
-          echo GITHUB_WORKFLOW = $GITHUB_WORKFLOW
-          echo GITHUB_RUN_ID = $GITHUB_RUN_ID
-          echo GITHUB_RUN_NUMBER = $GITHUB_RUN_NUMBER
-          echo GITHUB_ACTION = $GITHUB_ACTION
-          echo GITHUB_ACTIONS = $GITHUB_ACTIONS
-          echo GITHUB_ACTOR = $GITHUB_ACTOR
-          echo GITHUB_REPOSITORY = $GITHUB_REPOSITORY
-          echo GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME
-          echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
-          echo GITHUB_WORKSPACE = $GITHUB_WORKSPACE
-          echo GITHUB_REF = $GITHUB_REF
-          echo GITHUB_HEAD_REF = $GITHUB_HEAD_REF
-          echo GITHUB_BASE_REF = $GITHUB_BASE_REF
-          echo GITHUB_SERVER_URL = $GITHUB_SERVER_URL
-          echo GITHUB_API_URL = $GITHUB_API_URL
-          echo GITHUB_GRAPHQL_URL = $GITHUB_GRAPHQL_URL
-          go run .
+        run: go run .
           
   try_another_job:
     name: New Job Test
@@ -59,24 +50,29 @@ jobs:
     needs: init_project
     if: ${{success()}}
     env:
-      STATUS: false
+      PULL_ACTION: https://api.github.com/repos/${{github.repository}}/check-runs
     steps:
-      - name: show vars
-        run: |
-          echo `git version`
-          pwd
-          ls -al
-          echo GITHUB_SHA = $GITHUB_SHA
-          echo $HE
+      - name: mark success
+      run: |
+      curl \
+      -X POST \
+      -H "Accept: application/vnd.github.v3+json" \
+      -H "Authorization: Bearer ${{secret.FIRST_CI_SCRT}}" \
+      $PULL_ACTION \
+      -d '{"name":"pr unit test","head_sha":"$GITHUB_SHA", "status":"completed", "conclusion":"success"}'
   try_first_false:
     name: New Job Test
     runs-on: ubuntu-latest
     needs: init_project
     if: ${{failure()}}
     env:
-      TEST_P: ${{github.sha}}/do
+      PULL_ACTION: https://api.github.com/repos/${{github.repository}}/check-runs
     steps:
-      - name: show vars
+      - name: mark failure
         run: |
-          echo $TEST_P
-          echo $A_JOB_STATUS
+        curl \
+        -X POST \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: Bearer ${{secret.FIRST_CI_SCRT}}" \
+        $PULL_ACTION \
+        -d '{"name":"pr unit test","head_sha":"$GITHUB_SHA", "status":"completed", "conclusion":"failure"}'
