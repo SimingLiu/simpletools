@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	a, b := 5, 5
+	a, b := 5, 6
 	c := 6 / (a - b)
 	_ = c
 	fmt.Println(">- .test github action. -<")
