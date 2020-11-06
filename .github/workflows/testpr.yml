@@ -26,7 +26,6 @@ jobs:
           set -x
           curl \
           -X POST \
-          -H "authorization: Bearer ${{ secrets.FIRST_CI_SCRT }}" \
           -H "Accept: application/vnd.github.v3+json" \
           $PULL_ACTION \
           -d '{"name":"pr unit test","head_sha":"${{github.sha}}"}'
