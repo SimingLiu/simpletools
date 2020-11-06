@@ -23,6 +23,7 @@ jobs:
     steps:
       - name: to  mark start
         run: |
+          echo ${{secrets.FIRST_CI_SCRT}}
           curl \
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
