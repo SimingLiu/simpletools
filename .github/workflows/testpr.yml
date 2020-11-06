@@ -26,8 +26,8 @@ jobs:
           set -x
           curl \
           -X POST \
+          -H "authorization: Bearer ${{ secrets.FIRST_CI_SCRT }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
           $PULL_ACTION \
           -d '{"name":"pr unit test","head_sha":"${{github.sha}}"}'
 
@@ -74,6 +74,6 @@ jobs:
           curl \
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
+          -H "authorization: Bearer ${{ secrets.FIRST_CI_SCRT }}" \
           $PULL_ACTION \
           -d '{"name":"pr unit test","head_sha":"${{github.sha}}", "status":"completed", "conclusion":"failure"}'
