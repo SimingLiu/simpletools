@@ -8,8 +8,6 @@ on:
   push:
     branches: 
      - test_drone
-  pull_request:
-    branches: [branch_alpha]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
