@@ -28,6 +28,6 @@ jobs:
         shell: python
 
       - name: checkout code
-        if: ${{github.event_name == "push" && success()}}
+        if: ${{github.event_name}} == "push" && ${{success()}}
         run: echo $GITHUB_REF
           
