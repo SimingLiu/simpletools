@@ -43,4 +43,4 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           -H "authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
           https://api.github.com/repos/SimingLiu/simpletools/issues \
-          -d '{"title":"测试", "body": "${{msg}}"}'
+          -d '{"title":"测试", "body": "${{env.msg}}"}'
