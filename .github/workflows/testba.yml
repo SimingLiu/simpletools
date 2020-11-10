@@ -24,7 +24,7 @@ jobs:
           if "GITHUB_REF" in os.environ:
             println(os.getenv("GITHUB_REF"))
           else:
-            println("no $GITHUB_REF found")
+            print("no $GITHUB_REF found")
         shell: python
 
       - name: checkout code
