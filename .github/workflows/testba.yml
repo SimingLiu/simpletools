@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: first step
         env:
-          IS_PUSH: ${{endsWith(${{github.event_name}}, 'push')}}
+          IS_PUSH: ${{endsWith($GITHUB_EVENT_NAME, 'push')}}
         run: |
           import os
           if "GITHUB_REF" in os.environ:
