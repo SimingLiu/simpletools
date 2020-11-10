@@ -32,7 +32,7 @@ jobs:
           status: ${{job.status}}
         if: ${{success()}}
         run: |
-          if [[ $GITHUB_EVENT_NAME == "push"]]
+          if [[ $GITHUB_EVENT_NAME == "push" ]]
           then
                   msg="hello push"
           else
