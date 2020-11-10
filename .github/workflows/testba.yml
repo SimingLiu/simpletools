@@ -26,8 +26,8 @@ jobs:
           else:
             println("no $GITHUB_REF found")
         shell: python
-      - if: ${{github.event_name == "push" && success()}}
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
       - name: checkout code
+      - if: ${{github.event_name == "push" && success()}}
         run: echo $GITHUB_REF
           
