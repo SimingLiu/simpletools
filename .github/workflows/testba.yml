@@ -16,11 +16,18 @@ jobs:
     name: My Second CI Test Script
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    env:
-      branch_name: ${{`git rev-parse --abbrev-ref HEAD`}}
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: first step
+        run: |
+          import os
+          if "GITHUB_REF" in os.environ:
+            println(os.getenv("GITHUB_REF"))
+          else:
+            println("no $GITHUB_REF found")
+        shell: python
+      - if: ${{github.event_name == "push" && success()}}
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: checkout code
-        run: echo $branch_name
+        run: echo $GITHUB_REF
+          
