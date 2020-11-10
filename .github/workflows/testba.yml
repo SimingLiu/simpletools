@@ -30,15 +30,17 @@ jobs:
         env:
           STEPS_CONTEXT: ${{ toJson(steps) }}
           JOB_CONTEXT: ${{ toJson(job) }}
+          GITHUB_CONTEXT: ${{ toJson(github) }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: |
           msg="content body:\n"$STEPS_CONTEXT
           echo $msg
           echo $JOB_CONTEXT
           echo $MATRIX_CONTEXT
+          echo $GITHUB_CONTEXT
           curl \
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
           -H "authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
           https://api.github.com/repos/SimingLiu/simpletools/issues \
-          -d '{"title":"测试", "body": $msg}'
+          -d '{"title":"测试", "body": "${{msg}}"}'
