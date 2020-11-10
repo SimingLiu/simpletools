@@ -1,6 +1,6 @@
 name: Branch_alpha
 on:
-  pull:
+  push:
     branches: 
      - branch_alpha
 
