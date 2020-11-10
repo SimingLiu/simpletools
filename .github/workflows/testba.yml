@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ISSUE_URL: https://api.github.com/repos/${{github.repository}}/issues
+      URL_ROOT: https://api.github.com/repos/${{github.repository}}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -27,11 +28,6 @@ jobs:
 
       - name: at false
         if: ${{failure()}}
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-          JOB_CONTEXT: ${{ toJson(job) }}
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: |
           msg="content body:\n"$STEPS_CONTEXT
           echo $msg
@@ -42,5 +38,5 @@ jobs:
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
           -H "authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
-          https://api.github.com/repos/SimingLiu/simpletools/issues \
-          -d '{"title":"测试", "body": "${{env.GITHUB_CONTEXT}}"}'
+          ${{env.ISSUE_URL}} \
+          -d '{"title":"test false ${{github.head_commit.message}}", "body": "[查看问题](${{env.URL_ROOT}}/actions/runs/${{github.run_id}})", "assignee": "${{github.head_commit.author.email}}"}'
