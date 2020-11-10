@@ -19,18 +19,24 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: first step
-        env:
-          IS_PUSH: ${{endsWith($GITHUB_EVENT_NAME, 'push')}}
         run: |
           import os
           if "GITHUB_REF" in os.environ:
             print(os.getenv("GITHUB_REF"))
           else:
             print("no $GITHUB_REF found")
-          print("now push=", os.getenv("IS_PUSH"))
         shell: python
 
       - name: checkout code
-        if: ${{github.event_name}} == "push" && ${{success()}}
-        run: echo $GITHUB_REF
+        env:
+          status: ${{job.status}}
+        if: ${{success()}}
+        run: |
+          if [[ $GITHUB_EVENT_NAME == "push"]]
+          then
+                  msg="hello push"
+          else
+                  msg="hello man"
+          fi
+          echo $msg
           
