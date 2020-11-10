@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ISSUE_URL: https://api.github.com/repos/${{github.repository}}/issues
-      URL_ROOT: https://api.github.com/repos/${{github.repository}}
+      URL_ROOT: https://github.com/${{github.repository}}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -39,4 +39,4 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           -H "authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
           ${{env.ISSUE_URL}} \
-          -d '{"title":"test false ${{github.head_commit.message}}", "body": "[查看问题](${{env.URL_ROOT}}/actions/runs/${{github.run_id}})", "assignee": "${{github.head_commit.author.email}}"}'
+          -d '{"title":"test false ${{github.event.head_commit.message}}", "body": "[查看问题](${{env.URL_ROOT}}/actions/runs/${{github.run_id}})", "assignee": "${{github.event.head_commit.author.email}}"}'
