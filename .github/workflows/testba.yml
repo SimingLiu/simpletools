@@ -39,4 +39,4 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           -H "authorization: Bearer ${{secrets.FIRST_CI_SCRT}}" \
           ${{env.ISSUE_URL}} \
-          -d '{"title":"test false ${{github.event.head_commit.message}}", "body": "[查看问题](${{env.URL_ROOT}}/actions/runs/${{github.run_id}})", "assignee": "${{github.event.head_commit.author.email}}"}'
+          -d '{"title":"test false ${{github.event.head_commit.message}}", "body": "[查看问题](${{env.URL_ROOT}}/actions/runs/${{github.run_id}})", "assignees": ["${{github.event.head_commit.author.email}}"]}'
